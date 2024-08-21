@@ -1,236 +1,572 @@
+/** ==========================================================================================
+
+  Project :   Nutricare - Responsive Multi-purpose HTML5 Template
+  Version :   Bootstrap 4.1.1
+  Author :    Themetechmount
+
+========================================================================================== */
+
+
+/** ===============
+
+1. Preloader
+2. TopSearch
+3. fbar
+4. Fixed-header
+5. Menu
+6. Number rotator
+7. Enables menu toggle
+8. Skillbar
+9. Tab
+10. Accordion
+11. Isotope
+12. Prettyphoto
+13. owlCarousel
+    
+    .. Blog slide
+    .. Event slide
+    .. Post slide
+    .. Testimonial slide
+    .. Clients-logo
+    .. Team slide
+    .. Customer-slide
+    .. claasic-blog-slide
+
+13. One Page setting
+
+14. Back to top 
+
+ =============== */
+
+
+
 (function($) {
 
-	"use strict";
+   'use strict'
 
 
-	$(window).stellar({
-    responsive: true,
-    parallaxBackgrounds: true,
-    parallaxElements: true,
-    horizontalScrolling: false,
-    hideDistantElements: false,
-    scrollProperty: 'scroll'
-  });
+/*------------------------------------------------------------------------------*/
+/* Preloader
+/*------------------------------------------------------------------------------*/
+// makes sure the whole site is loaded
+ $(window).on("load",function() {
+        // will first fade out the loading animation
+     $("#preloader").fadeOut();
+        // will fade out the whole DIV that covers the website.
+     $("#status").fadeOut(9000);
+})
 
 
-	var fullHeight = function() {
+/*------------------------------------------------------------------------------*/
+/* TopSearch
+/*------------------------------------------------------------------------------*/
+  jQuery(".ttm-header-search-link a").on('click',function()
+  {
+    jQuery(".ttm-search-overlay").addClass('st-show');
+    jQuery(".ttm-overlay-serachform").addClass('st-show');
+    jQuery("body").addClass('st-prevent-scroll');
+    jQuery(".field.searchform-s").focus();return!1
+});
+  jQuery(".ttm-icon-close").on('click',function()
+    {
+        jQuery(".ttm-search-overlay").removeClass('st-show');
+        jQuery(".ttm-overlay-serachform").removeClass('st-show');
+        jQuery("body").removeClass('st-prevent-scroll');return!1
+    });
+        jQuery('.ttm-site-searchform').on('click',function(event){event.stopPropagation()})
+/*------------------------------------------------------------------------------*/
+/* fbar
+/*------------------------------------------------------------------------------*/
 
-		$('.js-fullheight').css('height', $(window).height());
-		$(window).resize(function(){
-			$('.js-fullheight').css('height', $(window).height());
-		});
+jQuery(".ttm-fbar-btn > a.ttm-fbar-btn-link").on('click', function(){     
+        if( jQuery(this).closest('.ttm-fbar').hasClass('themetechmount-fbar-position-default') ){
+            // Fbar top position
+            if( jQuery('.ttm-fbar-box-w').css('display')=='none' ){
+                jQuery('.ttm-fbar-open-icon', this).fadeOut();
+                jQuery('.ttm-fbar-close-icon', this).fadeIn();
+                
+                jQuery('.ttm-fbar-box-w').slideDown();
+            } else {
+                jQuery('.ttm-fbar-open-icon', this).fadeIn();
+                jQuery('.ttm-fbar-close-icon', this).fadeOut();
+                
+                jQuery('.ttm-fbar-box-w').slideUp();
+            }
+        } else {
+            // Fbar right position
+        }       
+        
+        return false;
+    }); 
+        
+    // Right btn click event
+    jQuery('.ttm-fbar-close, .ttm-fbar-btn > a.ttm-fbar-btn-link, .ttm-float-overlay').on('click', function(){
+        jQuery('.ttm-fbar-box-w').toggleClass('animated');
+        jQuery('.ttm-float-overlay').toggleClass('animated');
+        jQuery('.ttm-fbar-btn').toggleClass('animated');     
+    });
 
-	};
-	fullHeight();
-
-	// loader
-	var loader = function() {
-		setTimeout(function() { 
-			if($('#ftco-loader').length > 0) {
-				$('#ftco-loader').removeClass('show');
-			}
-		}, 1);
-	};
-	loader();
-
-  var carousel = function() {
-		$('.home-slider').owlCarousel({
-	    loop:true,
-	    autoplay: true,
-	    margin:0,
-	    animateOut: 'fadeOut',
-	    animateIn: 'fadeIn',
-	    nav:true,
-	    dots: true,
-	    autoplayHoverPause: false,
-	    items: 1,
-	    navText : ["<span class='ion-ios-arrow-back'></span>","<span class='ion-ios-arrow-forward'></span>"],
-	    responsive:{
-	      0:{
-	        items:1
-	      },
-	      600:{
-	        items:1
-	      },
-	      1000:{
-	        items:1
-	      }
-	    }
-		});
-
-		$('.carousel-testimony').owlCarousel({
-			center: true,
-			loop: true,
-			items:1,
-			margin: 30,
-			stagePadding: 0,
-			nav: false,
-			navText: ['<span class="ion-ios-arrow-back">', '<span class="ion-ios-arrow-forward">'],
-			responsive:{
-				0:{
-					items: 1
-				},
-				600:{
-					items: 2
-				},
-				1000:{
-					items: 3
-				}
-			}
-		});
-
-		$('.carousel-stories').owlCarousel({
-	    loop:true,
-	    autoplay: true,
-	    autoHeight: false,
-	    margin:30,
-	    nav:true,
-	    dots: false,
-	    autoplayHoverPause: false,
-	    items: 1,
-	    navText : ["<p><span class='fa fa-chevron-left'></span></p>","<p><span class='fa fa-chevron-right'></span></p>"],
-	    responsive:{
-	      0:{
-	        items:1
-	      },
-	      600:{
-	        items:1
-	      },
-	      1000:{
-	        items:1
-	      }
-	    }
-		});
-
-	};
-	carousel();
-
-	$('nav .dropdown').hover(function(){
-		var $this = $(this);
-		// 	 timer;
-		// clearTimeout(timer);
-		$this.addClass('show');
-		$this.find('> a').attr('aria-expanded', true);
-		// $this.find('.dropdown-menu').addClass('animated-fast fadeInUp show');
-		$this.find('.dropdown-menu').addClass('show');
-	}, function(){
-		var $this = $(this);
-			// timer;
-		// timer = setTimeout(function(){
-			$this.removeClass('show');
-			$this.find('> a').attr('aria-expanded', false);
-			// $this.find('.dropdown-menu').removeClass('animated-fast fadeInUp show');
-			$this.find('.dropdown-menu').removeClass('show');
-		// }, 100);
-	});
+/*------------------------------------------------------------------------------*/
+/* Fixed-header
+/*------------------------------------------------------------------------------*/
 
 
-	$('#dropdown04').on('show.bs.dropdown', function () {
-	  console.log('show');
-	});
+$(window).scroll(function(){
+    if ( matchMedia( 'only screen and (min-width: 1200px)' ).matches ) 
+    {
+        if ($(window).scrollTop() >= 50 ) {
+            $('.ttm-stickable-header').addClass('fixed-header');
+            $('.ttm-stickable-header').addClass('visible-title');
+        }
+        else {
 
-	// magnific popup
-	$('.image-popup').magnificPopup({
-    type: 'image',
-    closeOnContentClick: true,
-    closeBtnInside: false,
-    fixedContentPos: true,
-    mainClass: 'mfp-no-margins mfp-with-zoom', // class to remove default margin from left and right side
-     gallery: {
-      enabled: true,
-      navigateByImgClick: true,
-      preload: [0,1] // Will preload 0 - before current, and 1 after the current image
-    },
-    image: {
-      verticalFit: true
-    },
-    zoom: {
-      enabled: true,
-      duration: 300 // don't foget to change the duration also in CSS
+            $('.ttm-stickable-header').removeClass('fixed-header');
+            $('ttm-stickable-header').removeClass('visible-title');
+            }
     }
-  });
-
-  $('.popup-youtube, .popup-vimeo, .popup-gmaps').magnificPopup({
-    disableOn: 700,
-    type: 'iframe',
-    mainClass: 'mfp-fade',
-    removalDelay: 160,
-    preloader: false,
-
-    fixedContentPos: false
-  });
+});
 
 
-  var counter = function() {
-		
-		$('#section-counter').waypoint( function( direction ) {
+/*------------------------------------------------------------------------------*/
+/* Menu
+/*------------------------------------------------------------------------------*/
 
-			if( direction === 'down' && !$(this.element).hasClass('ftco-animated') ) {
-
-				var comma_separator_number_step = $.animateNumber.numberStepFactories.separator(',')
-				$('.number').each(function(){
-					var $this = $(this),
-						num = $this.data('number');
-						console.log(num);
-					$this.animateNumber(
-					  {
-					    number: num,
-					    numberStep: comma_separator_number_step
-					  }, 7000
-					);
-				});
-				
-			}
-
-		} , { offset: '95%' } );
-
-	}
-	counter();
-
-	var contentWayPoint = function() {
-		var i = 0;
-		$('.ftco-animate').waypoint( function( direction ) {
-
-			if( direction === 'down' && !$(this.element).hasClass('ftco-animated') ) {
-				
-				i++;
-
-				$(this.element).addClass('item-animate');
-				setTimeout(function(){
-
-					$('body .ftco-animate.item-animate').each(function(k){
-						var el = $(this);
-						setTimeout( function () {
-							var effect = el.data('animate-effect');
-							if ( effect === 'fadeIn') {
-								el.addClass('fadeIn ftco-animated');
-							} else if ( effect === 'fadeInLeft') {
-								el.addClass('fadeInLeft ftco-animated');
-							} else if ( effect === 'fadeInRight') {
-								el.addClass('fadeInRight ftco-animated');
-							} else {
-								el.addClass('fadeInUp ftco-animated');
-							}
-							el.removeClass('item-animate');
-						},  k * 50, 'easeInOutExpo' );
-					});
-					
-				}, 100);
-				
-			}
-
-		} , { offset: '95%' } );
-	};
-	contentWayPoint();
-
-	$('.appointment_date').datepicker({
-	  'format': 'm/d/yyyy',
-	  'autoclose': true
-	});
-
-	$('.appointment_time').timepicker();
+    $('ul li:has(ul)').addClass('has-submenu');
+    $('ul li ul').addClass('sub-menu');
 
 
+    $("ul.dropdown li").on({
+
+        mouseover: function(){
+           $(this).addClass("hover");
+        },  
+        mouseout: function(){
+           $(this).removeClass("hover");
+        }, 
+
+    });
+    
+    var $menu = $('#menu'), $menulink = $('#menu-toggle-form'), $menuTrigger = $('.has-submenu > a');
+    $menulink.on('click',function (e) {
+
+        $menulink.toggleClass('active');
+        $menu.toggleClass('active');
+    });
+
+    $menuTrigger.on('click',function (e) {
+        e.preventDefault();
+        var t = $(this);
+        t.toggleClass('active').next('ul').toggleClass('active');
+    });
+
+    $('ul li:has(ul)');
+
+
+/*------------------------------------------------------------------------------*/
+/* Animation on scroll: Number rotator
+/*------------------------------------------------------------------------------*/
+    
+    $("[data-appear-animation]").each(function() {
+        var self      = $(this);
+        var animation = self.data("appear-animation");
+        var delay     = (self.data("appear-animation-delay") ? self.data("appear-animation-delay") : 0);
+        
+        if( $(window).width() > 959 ) {
+            self.html('0');
+            self.waypoint(function(direction) {
+                if( !self.hasClass('completed') ){
+                    var from     = self.data('from');
+                    var to       = self.data('to');
+                    var interval = self.data('interval');
+                    self.numinate({
+                        format: '%counter%',
+                        from: from,
+                        to: to,
+                        runningInterval: 2000,
+                        stepUnit: interval,
+                        onComplete: function(elem) {
+                            self.addClass('completed');
+                        }
+                    });
+                }
+            }, { offset:'85%' });
+        } else {
+            if( animation == 'animateWidth' ) {
+                self.css('width', self.data("width"));
+            }
+        }
+    });
+
+
+/*------------------------------------------------------------------------------*/
+/* Skillbar
+/*------------------------------------------------------------------------------*/
+
+jQuery('.progress').each(function(){
+    jQuery(this).find('.progress-bar').animate({
+        width:jQuery(this).attr('data-value')
+    },6000);
+});
+
+/*------------------------------------------------------------------------------*/
+/* Tab
+/*------------------------------------------------------------------------------*/ 
+
+$('.ttm-tabs').each(function() {
+    $(this).children('.content-tab').children().hide();
+    $(this).children('.content-tab').children().first().show();
+    $(this).find('.tabs').children('li').on('click', function(e) {  
+        var liActive = $(this).index(),
+            contentActive = $(this).siblings().removeClass('active').parents('.ttm-tabs').children('.content-tab').children().eq(liActive);
+        contentActive.addClass('active').fadeIn('slow');
+        contentActive.siblings().removeClass('active');
+        $(this).addClass('active').parents('.ttm-tabs').children('.content-tab').children().eq(liActive).siblings().hide();
+        e.preventDefault();
+    });
+});
+
+
+/*------------------------------------------------------------------------------*/
+/* Accordion
+/*------------------------------------------------------------------------------*/
+
+/*https://www.antimath.info/jquery/quick-and-simple-jquery-accordion/*/
+$('.toggle').eq(0).addClass('active').find('.toggle-content').css('display','block');
+$('.accordion .toggle-title').on('click',function(){
+    $(this).siblings('.toggle-content').slideToggle('fast');
+    $(this).parent().toggleClass('active');
+    $(this).parent().siblings().children('.toggle-content:visible').slideUp('fast');
+    $(this).parent().siblings().children('.toggle-content:visible').parent().removeClass('active');
+});
+
+
+/*------------------------------------------------------------------------------*/
+/* Isotope
+/*------------------------------------------------------------------------------*/
+
+$(window).on(function(){
+
+    var $container = $('#isotopeContainer');
+
+    // filter items when filter link is clicked
+    $('#filters a').on(function(){
+      var selector = $(this).attr('data-filter');
+      $container.isotope({ filter: selector });
+      return false;
+    });
+
+    var $optionSets = $('#filters li'),
+        $optionLinks = $optionSets.find('a');
+
+        $optionLinks.on(function(){
+            var $this = $(this);
+            // don't proceed if already selected
+            if ( $this.hasClass('selected') ) {
+              return false;
+            }
+            var $optionSet = $this.parents('#filters');
+            $optionSet.find('.selected').removeClass('selected');
+            $this.addClass('selected');
+
+            // make option object dynamically, i.e. { filter: '.my-filter-class' }
+            var options = {},
+                key = $optionSet.attr('data-option-key'),
+                value = $this.attr('data-option-value');
+            // parse 'false' as false boolean
+            value = value === 'false' ? false : value;
+            options[ key ] = value;
+            if ( key === 'layoutMode' && typeof changeLayoutMode === 'function' ) {
+              // changes in layout modes need extra logic
+              changeLayoutMode( $this, options )
+            } else {
+              // otherwise, apply new options
+              $container.isotope( options );
+            }
+
+            return false;
+        });
+   });
+    
+    
+/*------------------------------------------------------------------------------*/
+/* Prettyphoto
+/*------------------------------------------------------------------------------*/
+jQuery(document).ready(function(){
+
+ // Normal link
+jQuery('a[href*=".jpg"], a[href*=".jpeg"], a[href*=".png"], a[href*=".gif"]').each(function(){
+    if( jQuery(this).attr('target')!='_blank' && !jQuery(this).hasClass('prettyphoto') && !jQuery(this).hasClass('modula-lightbox') ){
+        var attr = $(this).attr('data-gal');
+        if (typeof attr !== typeof undefined && attr !== false && attr!='prettyPhoto' ) {
+            jQuery(this).attr('data-rel','prettyPhoto');
+        }
+    }
+});     
+
+
+jQuery('a[data-gal^="prettyPhoto"]').prettyPhoto();
+jQuery('a.ttm_prettyphoto').prettyPhoto();
+jQuery('a[data-gal^="prettyPhoto"]').prettyPhoto();
+jQuery("a[data-gal^='prettyPhoto']").prettyPhoto({hook: 'data-gal'})
+
+});
+$(document).ready(function() {
+    var e = '<div class="prt_floting_customsett">'+
+                '<a href="https://support.preyantechnosys.com/" class="tmtheme_fbar_icons"><i class="fa fa-headphones"></i><span>Support</span></a>'+
+                '<a href="https://preyantechnosys.com/" class="tmtheme_fbar_icons"><i class="themifyicon themifyicon ti-pencil"></i><span>Customization</span></a>'+
+                '<a href="https://1.envato.market/kXgqx" class="tmtheme_fbar_icons"><i class="themifyicon ti-shopping-cart"></i><span class="buy_link">Buy<span></span></span></a>'+
+                '<div class="clearfix"></div>'+
+            '</div>';
+
+    $('body').append(e);
+}); 
+    
+
+/*------------------------------------------------------------------------------*/
+/* owlCarousel
+/*------------------------------------------------------------------------------*/
+
+// ===== 1- Blog slide ==== 
+
+    $(".blog-slide").owlCarousel({  
+        loop:true,
+        margin:0,
+         nav: $('.blog-slide').data('nav'),
+        dots: $('.blog-slide').data('dots'),                     
+        autoplay: $('.blog-slide').data('auto'),
+        smartSpeed: 3000,
+        responsive:{
+            0:{
+                items:1,
+            },
+            600:{
+                items:2,
+            },
+            992:{
+                items: $('.blog-slide').data('item')
+            }
+        }
+    });
+
+    jQuery('.ttm-row .featured-imagebox-services.style1').each(function(){
+    jQuery(this).hover(function(){
+        jQuery(this).parents('.ttm-row').find('.featured-imagebox-services.style1').removeClass('active');
+        jQuery(this).addClass('active')
+    })
+});
+
+// ===== 2- event slide ==== 
+
+    $(".event-slide").owlCarousel({  
+        loop:true,
+        margin:0,
+        nav: $('.event-slide').data('nav'),
+        dots: $('.event-slide').data('dots'),                     
+        autoplay: $('.event-slide').data('auto'),
+        smartSpeed: 1000,
+        responsive:{
+            0:{
+                items:1,
+            },
+            600:{
+                items:2,
+            },
+            992:{
+                items: $('.event-slide').data('item')
+            }
+        }
+    });
+
+// ===== 3 - Post slide ==== 
+
+    $(".post-slide").owlCarousel({  
+        loop:true,
+        margin:0,
+        nav: $('.post-slide').data('nav'),
+        dots: $('.post-slide').data('dots'),                     
+        autoplay: $('.post-slide').data('auto'),
+        smartSpeed: 3000,
+        responsive:{
+            0:{
+                items:1,
+            },
+            600:{
+                items:2,
+            },
+            992:{
+                items: $('.post-slide').data('item')
+            }
+        }
+    });
+
+// ===== 4 - Testimonial slide ==== 
+
+    $(".testimonial-slide").owlCarousel({  
+        loop:true,
+        margin:0,
+        smartSpeed: 1000,
+        nav: $('.testimonial-slide').data('nav'),
+        dots: $('.testimonial-slide').data('dots'), 
+        autoplay: $('.testimonial-slide').data('auto'),
+        responsive:{
+            0:{
+                items:1,
+            },
+            600:{
+                items:1,
+            },
+            1000:{
+                items: $('.testimonial-slide').data('item')
+            }
+        }
+    });
+
+// ===== 5 - Clients-logo ==== 
+
+$(".clients-slide").owlCarousel({ 
+    margin: 0,
+    loop:true,
+    nav: $('.clients-slide').data('nav'),
+    dots: $('.clients-slide').data('dots'),                     
+    autoplay: $('.clients-slide').data('auto'),
+    smartSpeed: 3000,
+    responsive:{
+        0:{
+            items:1
+        },
+        480:{
+            items:2
+        },
+        575:{
+            items:3
+        },
+        768:{
+            items:4
+        },
+        992:{
+            items: $('.clients-slide').data('item')
+        }
+    }    
+});
+
+
+// ===== 6 - Team slide==== 
+
+
+    $(".team-slide").owlCarousel({  
+        loop:true,
+        margin:0,
+        nav: $('.team-slide').data('nav'),
+        dots: $('.team-slide').data('dots'),                     
+        autoplay: $('.team-slide').data('auto'),
+        smartSpeed: 3000,
+        responsive:{
+            0:{
+                items:1,
+            },
+            480:{
+                items:2,
+            },
+            768:{
+                items:3
+            },
+            1200:{
+                items: $('.team-slide').data('item')
+            }
+        }
+    });
+
+// ===== 7 - customer slide==== 
+
+    $(".customer-slide").owlCarousel({  
+        loop:true,
+        margin:0,
+        nav: $('.customer-slide').data('nav'),
+        dots: $('.customer-slide').data('dots'),                     
+        autoplay: $('.customer-slide').data('auto'),
+        smartSpeed: 3000,
+        animateIn: 'fadeIn',
+        animateOut: 'fadeOut',
+        responsive:{
+            0:{
+                items:1,
+            },
+            1200:{
+                items: $('.customer-slide').data('item')
+            }
+        }
+    });
+
+
+// ===== 8 - classic-blog-slide ==== 
+
+    $(".classic-blog-slide").owlCarousel({  
+        loop:true,
+        margin:0,
+        nav: $('.classic-blog-slide').data('nav'),
+        dots: $('.classic-blog-slide').data('dots'),                     
+        autoplay: $('.classic-blog-slide').data('auto'),
+        smartSpeed: 1000,
+        responsive:{
+            0:{
+                items:1,
+            },
+            600:{
+                items:1,
+            },
+            992:{
+                items: $('.classic-blog-slide').data('item')
+            }
+        }
+    });
+
+
+/*------------------------------------------------------------------------------*/
+/* One Page setting
+/*------------------------------------------------------------------------------*/  
+jQuery(document).ready(function($) {
+  // Scroll to the desired section on click
+  // Make sure to add the `data-scroll` attribute to your `<a>` tag.
+  // Example: 
+  // `<a data-scroll href="#my-section">My Section</a>` will scroll to an element with the id of 'my-section'.
+  function scrollToSection(event) {
+    event.preventDefault();
+    var $section = $($(this).attr('href')); 
+    $('html, body').animate({
+      scrollTop: $section.offset().top
+    }, 500);
+  }
+  $('[data-scroll]').on('click', scrollToSection);
+}(jQuery));
+
+
+
+/*------------------------------------------------------------------------------*/
+/* Back to top
+/*------------------------------------------------------------------------------*/
+
+// ===== Scroll to Top ==== 
+jQuery('#totop').hide();
+jQuery(window).scroll(function() {
+    "use strict";
+    if (jQuery(this).scrollTop() >= 100) {        // If page is scrolled more than 50px
+        jQuery('#totop').fadeIn(200);    // Fade in the arrow
+        jQuery('#totop').addClass('top-visible');
+    } else {
+        jQuery('#totop').fadeOut(200);   // Else fade out the arrow
+        jQuery('#totop').removeClass('top-visible');
+    }
+});
+jQuery('#totop').on( "click", function() {      // When arrow is clicked
+    jQuery('body,html').animate({
+        scrollTop : 0                       // Scroll to top of body
+    }, 500);
+    return false;
+});
+
+
+ $(function() {
+
+    });
 
 })(jQuery);
-
